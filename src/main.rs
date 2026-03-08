@@ -496,7 +496,7 @@ impl eframe::App for XtaskRunner {
             .show(ctx, |ui| {
                 ui.horizontal(|ui| {
                     ui.add_space(4.0);
-                    let size = egui::vec2(40.0, 40.0); // adjust to taste
+                    let size = egui::vec2(44.0, 44.0); // adjust to taste
                     ui.add(egui::Image::new(&self.header_image).fit_to_exact_size(size));
                     ui.add_space(8.0);
                     ui.label(
