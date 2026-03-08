@@ -1,0 +1,25 @@
+[package]
+name = "cargo-xtask-runner"
+version = "0.1.0"
+edition = "2024"
+description = "A graphical task runner for cargo xtask workflows. Run `cargo xtask-runner` inside any Rust project."
+license = "MIT"
+repository = "https://github.com/Berkan4/xtask_runner"
+homepage = "https://github.com/Berkan4/xtask_runner"
+keywords = ["cargo", "xtask", "gui", "runner", "build"]
+categories = ["development-tools", "command-line-utilities"]
+readme = "README.md"
+exclude = [".github", "*.gif", "*.png"]
+
+[[bin]]
+name = "cargo-xtask-runner"
+path = "src/main.rs"
+
+[dependencies]
+eframe  = "0.27"   # egui application framework (bundles egui)
+egui    = "0.27"
+
+[profile.release]
+opt-level = 3
+lto       = true
+strip     = true   # smaller binary
