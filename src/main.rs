@@ -493,7 +493,7 @@ impl eframe::App for XtaskRunner {
                 ui.horizontal(|ui| {
                     ui.add_space(4.0);
                     ui.label(
-                        egui::RichText::new("🔧  xtask runner")
+                        egui::RichText::new("▶  xtask runner")
                             .strong()
                             .size(40.0)
                             .color(ACCENT),
@@ -930,6 +930,19 @@ fn find_project_root() -> Result<PathBuf, String> {
     )
 }
 
+
+
+fn load_icon() -> egui::IconData {
+    let bytes = include_bytes!("../assets/icon.png");
+    let image = image::load_from_memory(bytes).unwrap().into_rgba8();
+    let (width, height) = image.dimensions();
+    egui::IconData {
+        rgba: image.into_raw(),
+        width,
+        height,
+    }
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 fn main() -> eframe::Result<()> {
@@ -966,6 +979,8 @@ fn main() -> eframe::Result<()> {
         return Ok(());
     }
 
+    let icon = load_icon();
+
     // Actual GUI
     eframe::run_native(
         "xtask runner",
@@ -973,9 +988,11 @@ fn main() -> eframe::Result<()> {
             viewport: egui::ViewportBuilder::default()
                 .with_title("xtask runner")
                 .with_inner_size([980.0, 640.0])
-                .with_min_inner_size([640.0, 420.0]),
+                .with_min_inner_size([640.0, 420.0])
+                .with_icon(icon),
             ..Default::default()
         },
         Box::new(|cc| Box::new(XtaskRunner::new(cc))),
     )
+
 }
