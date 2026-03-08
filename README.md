@@ -4,8 +4,6 @@ A graphical task runner for [cargo xtask](https://github.com/matklad/cargo-xtask
 
 Instead of typing `cargo xtask <task> <target>` in the terminal, open a GUI that lists all your tasks, lets you check which ones to run, and streams the output to a built-in console — all without leaving your project.
 
-![screenshot placeholder](https://raw.githubusercontent.com/YOUR_USERNAME/cargo-xtask-runner/main/screenshot.png)
-
 ---
 
 ## Installation
@@ -36,8 +34,8 @@ target|task_id|description
 For example:
 ```
 workspace|fmt|Format all code
-my-crate|test|Run unit tests
-my-crate|build|Build release binary
+package|test|Run unit tests
+package|build|Build release binary
 ```
 
 Each line is one task. The `target` field groups tasks in the dropdown — use `workspace` for tasks that apply globally and don't need a target argument.
@@ -49,8 +47,8 @@ Each line is one task. The `target` field groups tasks in the dropdown — use `
 if args.contains(&"--list") {
     println!("workspace|fmt|Format all code");
     println!("workspace|clippy|Run clippy lints");
-    println!("my-crate|test|Run unit tests");
-    println!("my-crate|build|Build release binary");
+    println!("package|test|Run unit tests");
+    println!("package|build|Build release binary");
     return;
 }
 ```
