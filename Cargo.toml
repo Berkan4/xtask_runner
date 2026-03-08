@@ -9,7 +9,7 @@ homepage = "https://github.com/Berkan4/xtask_runner"
 keywords = ["cargo", "xtask", "gui", "runner", "build"]
 categories = ["development-tools", "command-line-utilities"]
 readme = "README.md"
-exclude = [".github", "*.gif", "*.png"]
+exclude = [".github", "*.gif"]
 
 [[bin]]
 name = "cargo-xtask-runner"
