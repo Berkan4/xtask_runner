@@ -933,6 +933,40 @@ fn find_project_root() -> Result<PathBuf, String> {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 fn main() -> eframe::Result<()> {
+    let args: Vec<String> = std::env::args().collect();
+
+    // If we were NOT started as the GUI instance, spawn it detached
+    if !args.contains(&"--gui".to_string()) {
+        use std::process::Command;
+
+        #[cfg(windows)]
+        {
+            use std::os::windows::process::CommandExt;
+            const DETACHED_PROCESS: u32 = 0x00000008;
+
+            let exe = std::env::current_exe().unwrap();
+
+            Command::new(exe)
+                .arg("--gui")
+                .creation_flags(DETACHED_PROCESS)
+                .spawn()
+                .expect("failed to spawn GUI");
+        }
+
+        #[cfg(not(windows))]
+        {
+            let exe = std::env::current_exe().unwrap();
+            Command::new(exe)
+                .arg("--gui")
+                .spawn()
+                .expect("failed to spawn GUI");
+        }
+
+        // Exit immediately so cargo returns control to terminal
+        return Ok(());
+    }
+
+    // Actual GUI
     eframe::run_native(
         "xtask runner",
         eframe::NativeOptions {
