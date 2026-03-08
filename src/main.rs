@@ -302,11 +302,15 @@ impl AppState {
 
 struct XtaskRunner {
     state: AppState,
+    header_image: egui::TextureHandle,
 }
 
 impl XtaskRunner {
-    fn new(_cc: &eframe::CreationContext<'_>) -> Self {
-        Self { state: AppState::new(find_project_root()) }
+    fn new(cc: &eframe::CreationContext<'_>) -> Self {
+        Self {
+            state:        AppState::new(find_project_root()),
+            header_image: load_header_image(&cc.egui_ctx),
+        }
     }
 
     /// Spawn tasks sequentially in a background thread.
@@ -492,8 +496,11 @@ impl eframe::App for XtaskRunner {
             .show(ctx, |ui| {
                 ui.horizontal(|ui| {
                     ui.add_space(4.0);
+                    let size = egui::vec2(40.0, 40.0); // adjust to taste
+                    ui.add(egui::Image::new(&self.header_image).fit_to_exact_size(size));
+                    ui.add_space(8.0);
                     ui.label(
-                        egui::RichText::new("▶  xtask runner")
+                        egui::RichText::new("xtask runner")
                             .strong()
                             .size(40.0)
                             .color(ACCENT),
@@ -930,7 +937,19 @@ fn find_project_root() -> Result<PathBuf, String> {
     )
 }
 
-
+fn load_header_image(ctx: &egui::Context) -> egui::TextureHandle {
+    let bytes = include_bytes!("../assets/icon.png");
+    let image = image::load_from_memory(bytes).unwrap().into_rgba8();
+    let (width, height) = image.dimensions();
+    ctx.load_texture(
+        "header_logo",
+        egui::ColorImage::from_rgba_unmultiplied(
+            [width as usize, height as usize],
+            &image.into_raw(),
+        ),
+        egui::TextureOptions::LINEAR,
+    )
+}
 
 fn load_icon() -> egui::IconData {
     let bytes = include_bytes!("../assets/icon.png");
