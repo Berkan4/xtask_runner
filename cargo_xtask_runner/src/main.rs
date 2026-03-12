@@ -297,14 +297,35 @@ impl AppState {
     }
 
     fn stop(&mut self) {
-        if let Some(mut child) = self.current_child.lock().unwrap().take() {
-            let _ = child.kill();
+        if let Some(child) = self.current_child.lock().unwrap().as_ref() {
+            let pid = child.id();
+
+            #[cfg(windows)]
+            {
+                use std::os::windows::process::CommandExt;
+                use std::process::Command;
+
+                const CREATE_NO_WINDOW: u32 = 0x08000000;
+
+                let _ = Command::new("taskkill")
+                    .args(["/PID", &pid.to_string(), "/T", "/F"])
+                    .creation_flags(CREATE_NO_WINDOW)
+                    .spawn();
+            }
+
+            #[cfg(not(windows))]
+            {
+                let _ = Command::new("kill").args(["-9", &pid.to_string()]).spawn();
+            }
         }
+
         *self.is_running.lock().unwrap() = false;
+
         self.log
             .lock()
             .unwrap()
             .push("■  Stopped by user.".to_string());
+
         for t in &mut self.tasks {
             if t.status == TaskStatus::Running {
                 t.status = TaskStatus::Failed;
@@ -361,8 +382,6 @@ impl XtaskRunner {
 
         thread::spawn(move || {
             for id in &ids {
-                // Check stop at the start of each iteration so pressing
-                // Stop aborts before the next task begins.
                 if !*is_running.lock().unwrap() {
                     break;
                 }
@@ -373,6 +392,7 @@ impl XtaskRunner {
                 } else {
                     format!(" {target}")
                 };
+
                 log.lock().unwrap().push(format!("@@START:{id}"));
                 log.lock().unwrap().push(format!(
                     "\n── cargo xtask {id}{tgt_label} {}\n",
@@ -397,6 +417,7 @@ impl XtaskRunner {
                     Err(e) => {
                         log.lock().unwrap().push(format!("❌ Failed to spawn: {e}"));
                     }
+
                     Ok(mut child) => {
                         if let Some(stdout) = child.stdout.take() {
                             let log2 = Arc::clone(&log);
@@ -406,6 +427,7 @@ impl XtaskRunner {
                                 }
                             });
                         }
+
                         if let Some(stderr) = child.stderr.take() {
                             let log2 = Arc::clone(&log);
                             thread::spawn(move || {
@@ -417,11 +439,26 @@ impl XtaskRunner {
 
                         *current_child.lock().unwrap() = Some(child);
 
-                        let exit_status = {
-                            let mut guard = current_child.lock().unwrap();
-                            guard.as_mut().and_then(|c| c.wait().ok())
+                        let exit_status = loop {
+                            if !*is_running.lock().unwrap() {
+                                break None;
+                            }
+
+                            {
+                                let mut guard = current_child.lock().unwrap();
+                                if let Some(child) = guard.as_mut() {
+                                    if let Ok(Some(status)) = child.try_wait() {
+                                        break Some(status);
+                                    }
+                                } else {
+                                    break None;
+                                }
+                            }
+
+                            std::thread::sleep(std::time::Duration::from_millis(50));
                         };
-                        *current_child.lock().unwrap() = None;
+
+                        current_child.lock().unwrap().take();
 
                         if let Some(s) = exit_status {
                             success = s.success();
