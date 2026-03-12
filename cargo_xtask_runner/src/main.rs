@@ -29,40 +29,40 @@ fn no_window_command(program: &str) -> Command {
 
 // ─── Theme ────────────────────────────────────────────────────────────────────
 
-const BG_DARK:     egui::Color32 = egui::Color32::from_rgb(15,  17,  21);
-const BG_PANEL:    egui::Color32 = egui::Color32::from_rgb(22,  25,  31);
-const BG_TASK:     egui::Color32 = egui::Color32::from_rgb(18,  21,  27);
-const BG_CONSOLE:  egui::Color32 = egui::Color32::from_rgb(10,  12,  15);
-const ACCENT:      egui::Color32 = egui::Color32::from_rgb(82,  196, 130);
-const ACCENT_DIM:  egui::Color32 = egui::Color32::from_rgb(45,  110, 72);
+const BG_DARK: egui::Color32 = egui::Color32::from_rgb(15, 17, 21);
+const BG_PANEL: egui::Color32 = egui::Color32::from_rgb(22, 25, 31);
+const BG_TASK: egui::Color32 = egui::Color32::from_rgb(18, 21, 27);
+const BG_CONSOLE: egui::Color32 = egui::Color32::from_rgb(10, 12, 15);
+const ACCENT: egui::Color32 = egui::Color32::from_rgb(82, 196, 130);
+const ACCENT_DIM: egui::Color32 = egui::Color32::from_rgb(45, 110, 72);
 const TEXT_NORMAL: egui::Color32 = egui::Color32::from_rgb(210, 215, 220);
-const TEXT_DIM:    egui::Color32 = egui::Color32::from_rgb(120, 130, 145);
+const TEXT_DIM: egui::Color32 = egui::Color32::from_rgb(120, 130, 145);
 
 const COL_DEFAULT: egui::Color32 = egui::Color32::from_rgb(210, 215, 220);
-const COL_ERROR:   egui::Color32 = egui::Color32::from_rgb(230, 80,  70);
-const COL_SUCCESS: egui::Color32 = egui::Color32::from_rgb(82,  196, 130);
-const COL_SECTION: egui::Color32 = egui::Color32::from_rgb(82,  196, 130);
+const COL_ERROR: egui::Color32 = egui::Color32::from_rgb(230, 80, 70);
+const COL_SUCCESS: egui::Color32 = egui::Color32::from_rgb(82, 196, 130);
+const COL_SECTION: egui::Color32 = egui::Color32::from_rgb(82, 196, 130);
 const COL_WARNING: egui::Color32 = egui::Color32::from_rgb(255, 180, 50);
-const COL_DIM:     egui::Color32 = egui::Color32::from_rgb(120, 130, 145);
+const COL_DIM: egui::Color32 = egui::Color32::from_rgb(120, 130, 145);
 
 fn setup_visuals(ctx: &egui::Context) {
     let mut v = egui::Visuals::dark();
-    v.window_fill                      = BG_PANEL;
-    v.panel_fill                       = BG_DARK;
-    v.faint_bg_color                   = BG_PANEL;
-    v.extreme_bg_color                 = BG_CONSOLE;
-    v.override_text_color              = Some(TEXT_NORMAL);
-    v.widgets.noninteractive.bg_fill   = BG_PANEL;
-    v.widgets.inactive.bg_fill         = BG_PANEL;
-    v.widgets.hovered.bg_fill          = egui::Color32::from_rgb(35, 40, 50);
-    v.widgets.active.bg_fill           = ACCENT_DIM;
+    v.window_fill = BG_PANEL;
+    v.panel_fill = BG_DARK;
+    v.faint_bg_color = BG_PANEL;
+    v.extreme_bg_color = BG_CONSOLE;
+    v.override_text_color = Some(TEXT_NORMAL);
+    v.widgets.noninteractive.bg_fill = BG_PANEL;
+    v.widgets.inactive.bg_fill = BG_PANEL;
+    v.widgets.hovered.bg_fill = egui::Color32::from_rgb(35, 40, 50);
+    v.widgets.active.bg_fill = ACCENT_DIM;
     v.widgets.noninteractive.fg_stroke = egui::Stroke::new(1.0, TEXT_DIM);
-    v.widgets.inactive.fg_stroke       = egui::Stroke::new(1.0, TEXT_NORMAL);
-    v.widgets.hovered.fg_stroke        = egui::Stroke::new(1.0, ACCENT);
-    v.widgets.active.fg_stroke         = egui::Stroke::new(1.0, ACCENT);
-    v.selection.bg_fill                = ACCENT_DIM;
-    v.selection.stroke                 = egui::Stroke::new(1.0, ACCENT);
-    v.window_stroke                    = egui::Stroke::new(1.0, egui::Color32::from_rgb(45, 50, 60));
+    v.widgets.inactive.fg_stroke = egui::Stroke::new(1.0, TEXT_NORMAL);
+    v.widgets.hovered.fg_stroke = egui::Stroke::new(1.0, ACCENT);
+    v.widgets.active.fg_stroke = egui::Stroke::new(1.0, ACCENT);
+    v.selection.bg_fill = ACCENT_DIM;
+    v.selection.stroke = egui::Stroke::new(1.0, ACCENT);
+    v.window_stroke = egui::Stroke::new(1.0, egui::Color32::from_rgb(45, 50, 60));
     ctx.set_visuals(v);
 }
 
@@ -93,26 +93,26 @@ enum TaskStatus {
 impl TaskStatus {
     fn label(&self) -> &str {
         match self {
-            TaskStatus::Idle    => "idle",
+            TaskStatus::Idle => "idle",
             TaskStatus::Running => "running",
-            TaskStatus::Done    => "done",
-            TaskStatus::Failed  => "failed",
+            TaskStatus::Done => "done",
+            TaskStatus::Failed => "failed",
         }
     }
     fn icon(&self) -> &str {
         match self {
-            TaskStatus::Idle    => "○",
+            TaskStatus::Idle => "○",
             TaskStatus::Running => "○",
-            TaskStatus::Done    => "○",
-            TaskStatus::Failed  => "○",
+            TaskStatus::Done => "○",
+            TaskStatus::Failed => "○",
         }
     }
     fn color(&self) -> egui::Color32 {
         match self {
-            TaskStatus::Idle    => TEXT_DIM,
+            TaskStatus::Idle => TEXT_DIM,
             TaskStatus::Running => COL_WARNING,
-            TaskStatus::Done    => ACCENT,
-            TaskStatus::Failed  => COL_ERROR,
+            TaskStatus::Done => ACCENT,
+            TaskStatus::Failed => COL_ERROR,
         }
     }
 }
@@ -123,26 +123,26 @@ impl TaskStatus {
 #[derive(Clone)]
 struct TaskEntry {
     target: String,
-    id:     String,
-    desc:   String,
+    id: String,
+    desc: String,
 }
 
 /// Runtime state for one task row in the UI
 struct TaskRow {
-    id:        String,
-    desc:      String,
-    checked:   bool,
-    status:    TaskStatus,
+    id: String,
+    desc: String,
+    checked: bool,
+    status: TaskStatus,
     is_global: bool,
 }
 
 impl TaskRow {
     fn from_entry(e: &TaskEntry) -> Self {
         Self {
-            id:        e.id.clone(),
-            desc:      e.desc.clone(),
-            checked:   true,
-            status:    TaskStatus::Idle,
+            id: e.id.clone(),
+            desc: e.desc.clone(),
+            checked: true,
+            status: TaskStatus::Idle,
             is_global: e.target == "workspace",
         }
     }
@@ -150,44 +150,47 @@ impl TaskRow {
 
 // ─── Shared state ─────────────────────────────────────────────────────────────
 
-type Log          = Arc<Mutex<Vec<String>>>;
-type IsRunning    = Arc<Mutex<bool>>;
+type Log = Arc<Mutex<Vec<String>>>;
+type IsRunning = Arc<Mutex<bool>>;
 type CurrentChild = Arc<Mutex<Option<Child>>>;
 
 struct AppState {
     /// All entries parsed from --list, kept for reference
-    all_entries:      Vec<TaskEntry>,
+    all_entries: Vec<TaskEntry>,
     /// Unique target names in the order they appeared
-    target_names:     Vec<String>,
+    target_names: Vec<String>,
     /// Currently selected index into target_names
-    selected_target:  usize,
+    selected_target: usize,
     /// Task rows for the currently selected target
-    tasks:            Vec<TaskRow>,
-    checked_state:    std::collections::HashMap<String, std::collections::HashMap<String, bool>>,
-    log:              Log,
-    is_running:       IsRunning,
-    current_child:    CurrentChild,
-    project_root:     PathBuf,
-    load_error:       Option<String>,
+    tasks: Vec<TaskRow>,
+    checked_state: std::collections::HashMap<String, std::collections::HashMap<String, bool>>,
+    log: Log,
+    is_running: IsRunning,
+    current_child: CurrentChild,
+    project_root: PathBuf,
+    load_error: Option<String>,
 }
 
 impl AppState {
     fn new(root_result: Result<PathBuf, String>) -> Self {
         let (project_root, initial_error) = match root_result {
-            Ok(p)  => (p, None),
-            Err(e) => (std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")), Some(e)),
+            Ok(p) => (p, None),
+            Err(e) => (
+                std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")),
+                Some(e),
+            ),
         };
         let mut s = Self {
-            all_entries:     Vec::new(),
-            target_names:    Vec::new(),
+            all_entries: Vec::new(),
+            target_names: Vec::new(),
             selected_target: 0,
-            tasks:           Vec::new(),
-            log:             Arc::new(Mutex::new(Vec::new())),
-            checked_state:   std::collections::HashMap::new(),
-            is_running:      Arc::new(Mutex::new(false)),
-            current_child:   Arc::new(Mutex::new(None)),
+            tasks: Vec::new(),
+            log: Arc::new(Mutex::new(Vec::new())),
+            checked_state: std::collections::HashMap::new(),
+            is_running: Arc::new(Mutex::new(false)),
+            current_child: Arc::new(Mutex::new(None)),
             project_root,
-            load_error:      initial_error,
+            load_error: initial_error,
         };
         if s.load_error.is_none() {
             s.reload();
@@ -222,8 +225,8 @@ impl AppState {
                     let parts: Vec<&str> = line.splitn(3, '|').collect();
                     if parts.len() == 3 {
                         let target = parts[0].trim().to_string();
-                        let id     = parts[1].trim().to_string();
-                        let desc   = parts[2].trim().to_string();
+                        let id = parts[1].trim().to_string();
+                        let desc = parts[2].trim().to_string();
 
                         // Track unique targets in order
                         if !self.target_names.contains(&target) {
@@ -238,7 +241,8 @@ impl AppState {
         if self.target_names.is_empty() {
             self.load_error = Some(
                 "`cargo xtask --list` returned no entries.\n\
-                 Expected format: target|task_id|description".to_string()
+                 Expected format: target|task_id|description"
+                    .to_string(),
             );
             return;
         }
@@ -252,9 +256,11 @@ impl AppState {
     fn rebuild_task_rows(&mut self) {
         let target = match self.target_names.get(self.selected_target) {
             Some(t) => t.clone(),
-            None    => return,
+            None => return,
         };
-        self.tasks = self.all_entries.iter()
+        self.tasks = self
+            .all_entries
+            .iter()
             .filter(|e| e.target == target)
             .map(|e| {
                 let mut row = TaskRow::from_entry(e);
@@ -269,11 +275,17 @@ impl AppState {
     }
 
     fn current_target(&self) -> Option<&str> {
-        self.target_names.get(self.selected_target).map(|s| s.as_str())
+        self.target_names
+            .get(self.selected_target)
+            .map(|s| s.as_str())
     }
 
     fn checked_ids(&self) -> Vec<String> {
-        self.tasks.iter().filter(|t| t.checked).map(|t| t.id.clone()).collect()
+        self.tasks
+            .iter()
+            .filter(|t| t.checked)
+            .map(|t| t.id.clone())
+            .collect()
     }
 
     fn any_checked(&self) -> bool {
@@ -289,7 +301,10 @@ impl AppState {
             let _ = child.kill();
         }
         *self.is_running.lock().unwrap() = false;
-        self.log.lock().unwrap().push("■  Stopped by user.".to_string());
+        self.log
+            .lock()
+            .unwrap()
+            .push("■  Stopped by user.".to_string());
         for t in &mut self.tasks {
             if t.status == TaskStatus::Running {
                 t.status = TaskStatus::Failed;
@@ -308,7 +323,7 @@ struct XtaskRunner {
 impl XtaskRunner {
     fn new(cc: &eframe::CreationContext<'_>) -> Self {
         Self {
-            state:        AppState::new(find_project_root()),
+            state: AppState::new(find_project_root()),
             header_image: load_header_image(&cc.egui_ctx),
         }
     }
@@ -316,11 +331,13 @@ impl XtaskRunner {
     /// Spawn tasks sequentially in a background thread.
     /// Each task is invoked as: cargo xtask <task_id> <target>
     fn run_tasks(&mut self, ids: Vec<String>) {
-        if ids.is_empty() || self.state.currently_running() { return; }
+        if ids.is_empty() || self.state.currently_running() {
+            return;
+        }
 
         let target = match self.state.current_target() {
             Some(t) => t.to_string(),
-            None    => return,
+            None => return,
         };
 
         for task in &mut self.state.tasks {
@@ -328,12 +345,15 @@ impl XtaskRunner {
         }
         self.state.log.lock().unwrap().clear();
 
-        let log           = Arc::clone(&self.state.log);
-        let is_running    = Arc::clone(&self.state.is_running);
+        let log = Arc::clone(&self.state.log);
+        let is_running = Arc::clone(&self.state.is_running);
         let current_child = Arc::clone(&self.state.current_child);
-        let project_root  = self.state.project_root.clone();
+        let project_root = self.state.project_root.clone();
 
-        let id_is_global: std::collections::HashMap<String, bool> = self.state.tasks.iter()
+        let id_is_global: std::collections::HashMap<String, bool> = self
+            .state
+            .tasks
+            .iter()
             .map(|t| (t.id.clone(), t.is_global))
             .collect();
 
@@ -343,10 +363,16 @@ impl XtaskRunner {
             for id in &ids {
                 // Check stop at the start of each iteration so pressing
                 // Stop aborts before the next task begins.
-                if !*is_running.lock().unwrap() { break; }
+                if !*is_running.lock().unwrap() {
+                    break;
+                }
 
                 let global = id_is_global.get(id.as_str()).copied().unwrap_or(false);
-                let tgt_label = if global { String::new() } else { format!(" {target}") };
+                let tgt_label = if global {
+                    String::new()
+                } else {
+                    format!(" {target}")
+                };
                 log.lock().unwrap().push(format!("@@START:{id}"));
                 log.lock().unwrap().push(format!(
                     "\n── cargo xtask {id}{tgt_label} {}\n",
@@ -354,7 +380,9 @@ impl XtaskRunner {
                 ));
 
                 let mut cmd_args = vec!["xtask", id.as_str()];
-                if !global { cmd_args.push(target.as_str()); }
+                if !global {
+                    cmd_args.push(target.as_str());
+                }
 
                 let child = no_window_command("cargo")
                     .args(&cmd_args)
@@ -401,16 +429,20 @@ impl XtaskRunner {
                     }
                 }
 
-                if !*is_running.lock().unwrap() { break; }
+                if !*is_running.lock().unwrap() {
+                    break;
+                }
 
-                log.lock().unwrap().push(
-                    if success { format!("@@DONE:{id}") } else { format!("@@FAIL:{id}") }
-                );
+                log.lock().unwrap().push(if success {
+                    format!("@@DONE:{id}")
+                } else {
+                    format!("@@FAIL:{id}")
+                });
 
                 if !success {
-                    log.lock().unwrap().push(
-                        format!("❌ Task `{id}` failed — pipeline stopped.")
-                    );
+                    log.lock()
+                        .unwrap()
+                        .push(format!("❌ Task `{id}` failed — pipeline stopped."));
                     break;
                 }
             }
@@ -428,15 +460,22 @@ fn line_color(line: &str) -> egui::Color32 {
         COL_ERROR
     } else if s.starts_with("warning[") || s.starts_with("warning: ") || line.starts_with("⚠") {
         COL_WARNING
-    } else if s.starts_with("   Finished") || s.starts_with("    Finished")
-           || line.starts_with("✅") || s.starts_with("test result: ok")
+    } else if s.starts_with("   Finished")
+        || s.starts_with("    Finished")
+        || line.starts_with("✅")
+        || s.starts_with("test result: ok")
     {
         COL_SUCCESS
-    } else if s.starts_with("   Compiling") || s.starts_with("    Compiling")
-           || s.starts_with("   Downloading") || s.starts_with("    Downloading")
-           || s.starts_with("   Updating") || s.starts_with("    Updating")
-           || s.starts_with("   Running") || s.starts_with("    Running")
-           || s.starts_with("   Fetching") || s.starts_with("    Fetching")
+    } else if s.starts_with("   Compiling")
+        || s.starts_with("    Compiling")
+        || s.starts_with("   Downloading")
+        || s.starts_with("    Downloading")
+        || s.starts_with("   Updating")
+        || s.starts_with("    Updating")
+        || s.starts_with("   Running")
+        || s.starts_with("    Running")
+        || s.starts_with("   Fetching")
+        || s.starts_with("    Fetching")
     {
         COL_DIM
     } else if line.starts_with("──") || line.starts_with("■") || line.starts_with("🚀") {
@@ -461,8 +500,13 @@ impl eframe::App for XtaskRunner {
         // ── Process sentinel log lines → update task statuses ─────────────────
         {
             let mut log = self.state.log.lock().unwrap();
-            let sentinels: Vec<String> = log.iter()
-                .filter(|l| l.starts_with("@@START:") || l.starts_with("@@DONE:") || l.starts_with("@@FAIL:"))
+            let sentinels: Vec<String> = log
+                .iter()
+                .filter(|l| {
+                    l.starts_with("@@START:")
+                        || l.starts_with("@@DONE:")
+                        || l.starts_with("@@FAIL:")
+                })
                 .cloned()
                 .collect();
 
@@ -492,7 +536,11 @@ impl eframe::App for XtaskRunner {
 
         // ── Header ────────────────────────────────────────────────────────────
         egui::TopBottomPanel::top("header")
-            .frame(egui::Frame::none().fill(BG_DARK).inner_margin(egui::Margin::same(10.0)))
+            .frame(
+                egui::Frame::none()
+                    .fill(BG_DARK)
+                    .inner_margin(egui::Margin::same(10.0)),
+            )
             .show(ctx, |ui| {
                 ui.horizontal(|ui| {
                     ui.add_space(4.0);
@@ -507,15 +555,33 @@ impl eframe::App for XtaskRunner {
                     );
                     ui.add_space(12.0);
                     ui.vertical(|ui| {
-                        ui.label(egui::RichText::new("Drop next to a Cargo.toml. Discovers tasks via").size(11.0).color(TEXT_DIM));
-                        ui.label(egui::RichText::new("cargo xtask --list").size(10.0).color(TEXT_NORMAL).monospace());
-                        ui.label(egui::RichText::new("and lets you run them individually or as a pipeline.").size(11.0).color(TEXT_DIM));
+                        ui.label(
+                            egui::RichText::new("Drop next to a Cargo.toml. Discovers tasks via")
+                                .size(11.0)
+                                .color(TEXT_DIM),
+                        );
+                        ui.label(
+                            egui::RichText::new("cargo xtask --list")
+                                .size(10.0)
+                                .color(TEXT_NORMAL)
+                                .monospace(),
+                        );
+                        ui.label(
+                            egui::RichText::new(
+                                "and lets you run them individually or as a pipeline.",
+                            )
+                            .size(11.0)
+                            .color(TEXT_DIM),
+                        );
                     });
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                         ui.label(
-                            egui::RichText::new(format!("📁  {}", self.state.project_root.display()))
-                                .size(11.0)
-                                .color(TEXT_DIM),
+                            egui::RichText::new(format!(
+                                "📁  {}",
+                                self.state.project_root.display()
+                            ))
+                            .size(11.0)
+                            .color(TEXT_DIM),
                         );
                     });
                 });
@@ -532,7 +598,11 @@ impl eframe::App for XtaskRunner {
             .resizable(true)
             .default_width(360.0)
             .min_width(360.0)
-            .frame(egui::Frame::none().fill(BG_DARK).inner_margin(egui::Margin::same(0.0)))
+            .frame(
+                egui::Frame::none()
+                    .fill(BG_DARK)
+                    .inner_margin(egui::Margin::same(0.0)),
+            )
             .show(ctx, |ui| {
                 ui.add_space(8.0);
 
@@ -569,13 +639,19 @@ impl eframe::App for XtaskRunner {
                             ui.add_space(12.0);
                             ui.separator();
                             ui.add_space(8.0);
-                            if ui.add(
-                                egui::Button::new(
-                                    egui::RichText::new("\u{21ba}  Retry").color(egui::Color32::BLACK).strong().size(12.0)
+                            if ui
+                                .add(
+                                    egui::Button::new(
+                                        egui::RichText::new("\u{21ba}  Retry")
+                                            .color(egui::Color32::BLACK)
+                                            .strong()
+                                            .size(12.0),
+                                    )
+                                    .fill(ACCENT)
+                                    .min_size(egui::vec2(90.0, 26.0)),
                                 )
-                                .fill(ACCENT)
-                                .min_size(egui::vec2(90.0, 26.0)),
-                            ).clicked() {
+                                .clicked()
+                            {
                                 self.state.load_error = None;
                                 self.state.reload();
                             }
@@ -590,28 +666,42 @@ impl eframe::App for XtaskRunner {
                         ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                             let n = self.state.target_names.len();
                             let cur = self.state.selected_target;
-                            if ui.add(
-                                egui::Button::new(egui::RichText::new("▶").size(11.0).color(TEXT_DIM))
+                            if ui
+                                .add(
+                                    egui::Button::new(
+                                        egui::RichText::new("▶").size(11.0).color(TEXT_DIM),
+                                    )
                                     .fill(egui::Color32::TRANSPARENT)
                                     .stroke(egui::Stroke::new(1.0, TEXT_DIM))
                                     .min_size(egui::vec2(22.0, 18.0)),
-                            ).clicked() && n > 0 {
+                                )
+                                .clicked()
+                                && n > 0
+                            {
                                 new_target = Some((cur + 1) % n);
                             }
                             ui.add_space(2.0);
-                            if ui.add(
-                                egui::Button::new(egui::RichText::new("◀").size(11.0).color(TEXT_DIM))
+                            if ui
+                                .add(
+                                    egui::Button::new(
+                                        egui::RichText::new("◀").size(11.0).color(TEXT_DIM),
+                                    )
                                     .fill(egui::Color32::TRANSPARENT)
                                     .stroke(egui::Stroke::new(1.0, TEXT_DIM))
                                     .min_size(egui::vec2(22.0, 18.0)),
-                            ).clicked() && n > 0 {
+                                )
+                                .clicked()
+                                && n > 0
+                            {
                                 new_target = Some((cur + n - 1) % n);
                             }
                         });
                     });
                     ui.add_space(6.0);
 
-                    let current_name = self.state.target_names
+                    let current_name = self
+                        .state
+                        .target_names
                         .get(self.state.selected_target)
                         .cloned()
                         .unwrap_or_default();
@@ -625,7 +715,9 @@ impl eframe::App for XtaskRunner {
                     egui::ComboBox::from_id_source("target_combo")
                         .width(ui.available_width() - 4.0)
                         .selected_text(
-                            egui::RichText::new(&display_name).color(TEXT_NORMAL).size(13.0)
+                            egui::RichText::new(&display_name)
+                                .color(TEXT_NORMAL)
+                                .size(13.0),
                         )
                         .show_ui(ui, |ui| {
                             for (i, name) in self.state.target_names.iter().enumerate() {
@@ -635,9 +727,8 @@ impl eframe::App for XtaskRunner {
                                 } else {
                                     (name.as_str(), if selected { ACCENT } else { TEXT_NORMAL })
                                 };
-                                let label = egui::RichText::new(label_str)
-                                    .color(label_color)
-                                    .size(13.0);
+                                let label =
+                                    egui::RichText::new(label_str).color(label_color).size(13.0);
                                 if ui.selectable_label(selected, label).clicked() {
                                     new_target = Some(i);
                                 }
@@ -653,20 +744,34 @@ impl eframe::App for XtaskRunner {
                     ui.horizontal(|ui| {
                         ui.label(egui::RichText::new("Tasks").color(TEXT_DIM).size(12.0));
                         ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                            if ui.add(
-                                egui::Button::new(egui::RichText::new("None").color(TEXT_DIM).size(11.0))
+                            if ui
+                                .add(
+                                    egui::Button::new(
+                                        egui::RichText::new("None").color(TEXT_DIM).size(11.0),
+                                    )
                                     .fill(egui::Color32::TRANSPARENT)
                                     .stroke(egui::Stroke::NONE),
-                            ).clicked() {
-                                for t in &mut self.state.tasks { t.checked = false; }
+                                )
+                                .clicked()
+                            {
+                                for t in &mut self.state.tasks {
+                                    t.checked = false;
+                                }
                             }
                             ui.label(egui::RichText::new("·").color(TEXT_DIM).size(11.0));
-                            if ui.add(
-                                egui::Button::new(egui::RichText::new("All").color(TEXT_DIM).size(11.0))
+                            if ui
+                                .add(
+                                    egui::Button::new(
+                                        egui::RichText::new("All").color(TEXT_DIM).size(11.0),
+                                    )
                                     .fill(egui::Color32::TRANSPARENT)
                                     .stroke(egui::Stroke::NONE),
-                            ).clicked() {
-                                for t in &mut self.state.tasks { t.checked = true; }
+                                )
+                                .clicked()
+                            {
+                                for t in &mut self.state.tasks {
+                                    t.checked = true;
+                                }
                             }
                         });
                     });
@@ -680,69 +785,81 @@ impl eframe::App for XtaskRunner {
                         .max_height(ui.available_height() - 60.0)
                         .show(ui, |ui| {
                             for task in &mut self.state.tasks {
-                                let sc   = task.status.color();
+                                let sc = task.status.color();
                                 let icon = task.status.icon();
                                 let mut run_btn_rect: Option<egui::Rect> = None;
 
                                 let card_resp = task_frame().show(ui, |ui| {
                                     ui.horizontal(|ui| {
                                         ui.vertical(|ui| {
-                                            ui.label(egui::RichText::new(icon).color(sc).size(13.0));
+                                            ui.label(
+                                                egui::RichText::new(icon).color(sc).size(13.0),
+                                            );
                                             ui.add_enabled_ui(!running, |ui| {
                                                 ui.checkbox(&mut task.checked, "");
                                             });
                                         });
 
-                                        ui.with_layout(egui::Layout::top_down(egui::Align::LEFT).with_main_wrap(false), |ui| {
-                                            ui.set_max_width(ui.available_width() - 68.0); // 68 = Run button width + margin
-                                            ui.horizontal(|ui| {
-                                                ui.label(
-                                                    egui::RichText::new(&task.id)
-                                                        .strong()
-                                                        .size(13.0)
-                                                        .color(TEXT_NORMAL),
+                                        ui.with_layout(
+                                            egui::Layout::top_down(egui::Align::LEFT)
+                                                .with_main_wrap(false),
+                                            |ui| {
+                                                ui.set_max_width(ui.available_width() - 68.0); // 68 = Run button width + margin
+                                                ui.horizontal(|ui| {
+                                                    ui.label(
+                                                        egui::RichText::new(&task.id)
+                                                            .strong()
+                                                            .size(13.0)
+                                                            .color(TEXT_NORMAL),
+                                                    );
+                                                    ui.label(
+                                                        egui::RichText::new(task.status.label())
+                                                            .size(10.5)
+                                                            .color(sc),
+                                                    );
+                                                });
+                                                ui.add(
+                                                    egui::Label::new(
+                                                        egui::RichText::new(&task.desc)
+                                                            .size(11.0)
+                                                            .color(TEXT_DIM),
+                                                    )
+                                                    .truncate(true),
                                                 );
-                                                ui.label(
-                                                    egui::RichText::new(task.status.label())
-                                                        .size(10.5)
-                                                        .color(sc),
-                                                );
-                                            });
-                                            ui.add(
-                                                egui::Label::new(
-                                                    egui::RichText::new(&task.desc)
-                                                        .size(11.0)
-                                                        .color(TEXT_DIM),
-                                                )
-                                                    .truncate(true)
-                                            );
-                                        });
+                                            },
+                                        );
 
-                                        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                                            ui.add_enabled_ui(!running, |ui| {
-                                                let btn = egui::Button::new(
-                                                    egui::RichText::new("▶ Run")
-                                                        .size(12.0)
-                                                        .strong()
-                                                        .color(egui::Color32::BLACK),
-                                                )
-                                                .fill(ACCENT)
-                                                .min_size(egui::vec2(60.0, 24.0));
-                                                let resp = ui.add(btn)
-                                                    .on_hover_text(format!("Run `{}`", task.id));
-                                                run_btn_rect = Some(resp.rect);
-                                                if resp.clicked() {
-                                                    single_run = Some(task.id.clone());
-                                                }
-                                            });
-                                        });
+                                        ui.with_layout(
+                                            egui::Layout::right_to_left(egui::Align::Center),
+                                            |ui| {
+                                                ui.add_enabled_ui(!running, |ui| {
+                                                    let btn = egui::Button::new(
+                                                        egui::RichText::new("▶ Run")
+                                                            .size(12.0)
+                                                            .strong()
+                                                            .color(egui::Color32::BLACK),
+                                                    )
+                                                    .fill(ACCENT)
+                                                    .min_size(egui::vec2(60.0, 24.0));
+                                                    let resp = ui.add(btn).on_hover_text(format!(
+                                                        "Run `{}`",
+                                                        task.id
+                                                    ));
+                                                    run_btn_rect = Some(resp.rect);
+                                                    if resp.clicked() {
+                                                        single_run = Some(task.id.clone());
+                                                    }
+                                                });
+                                            },
+                                        );
                                     });
                                 });
 
                                 // Click anywhere on card (except checkbox + run button) to toggle
                                 if !running {
                                     let card_rect = card_resp.response.rect;
-                                    let run_btn_x = run_btn_rect.map_or(card_rect.right(), |r| r.left());
+                                    let run_btn_x =
+                                        run_btn_rect.map_or(card_rect.right(), |r| r.left());
                                     let checkbox_right = card_rect.min.x + 46.0; // icon(18) + checkbox(28)
 
                                     // Allocate a clickable sense over just the "safe" portion of the card:
@@ -755,7 +872,11 @@ impl eframe::App for XtaskRunner {
                                     // interact_with_hovered uses egui's own hit-test + claim system,
                                     // so it won't fire when a widget below (Run selected) was clicked,
                                     // and it won't fire outside the scroll area's clip rect.
-                                    let click_resp = ui.interact(safe_rect, ui.id().with(&task.id), egui::Sense::click());
+                                    let click_resp = ui.interact(
+                                        safe_rect,
+                                        ui.id().with(&task.id),
+                                        egui::Sense::click(),
+                                    );
                                     if click_resp.clicked() {
                                         task.checked = !task.checked;
                                     }
@@ -772,34 +893,44 @@ impl eframe::App for XtaskRunner {
                     ui.horizontal(|ui| {
                         let can_run = self.state.any_checked() && !running;
                         ui.add_enabled_ui(can_run, |ui| {
-                            if ui.add(
-                                egui::Button::new(
-                                    egui::RichText::new("▶  Run selected")
-                                        .color(egui::Color32::BLACK)
-                                        .strong()
-                                        .size(13.0),
+                            if ui
+                                .add(
+                                    egui::Button::new(
+                                        egui::RichText::new("▶  Run selected")
+                                            .color(egui::Color32::BLACK)
+                                            .strong()
+                                            .size(13.0),
+                                    )
+                                    .fill(ACCENT)
+                                    .min_size(egui::Vec2::new(140.0, 30.0)),
                                 )
-                                .fill(ACCENT)
-                                .min_size(egui::Vec2::new(140.0, 30.0)),
-                            ).clicked() {
+                                .clicked()
+                            {
                                 do_run_selected = true;
                             }
                         });
 
                         if running {
                             ui.add_space(8.0);
-                            ui.label(egui::RichText::new("● running…").color(COL_WARNING).size(12.0));
+                            ui.label(
+                                egui::RichText::new("● running…")
+                                    .color(COL_WARNING)
+                                    .size(12.0),
+                            );
                             ui.add_space(8.0);
-                            if ui.add(
-                                egui::Button::new(
-                                    egui::RichText::new("■  Stop")
-                                        .color(egui::Color32::WHITE)
-                                        .strong()
-                                        .size(13.0),
+                            if ui
+                                .add(
+                                    egui::Button::new(
+                                        egui::RichText::new("■  Stop")
+                                            .color(egui::Color32::WHITE)
+                                            .strong()
+                                            .size(13.0),
+                                    )
+                                    .fill(COL_ERROR)
+                                    .min_size(egui::Vec2::new(80.0, 30.0)),
                                 )
-                                .fill(COL_ERROR)
-                                .min_size(egui::Vec2::new(80.0, 30.0)),
-                            ).clicked() {
+                                .clicked()
+                            {
                                 do_stop = true;
                             }
                         }
@@ -812,11 +943,16 @@ impl eframe::App for XtaskRunner {
         if let Some(idx) = new_target {
             if idx != self.state.selected_target {
                 // Flush checkboxes for the target we're LEAVING, before updating the index
-                let leaving = self.state.target_names
+                let leaving = self
+                    .state
+                    .target_names
                     .get(self.state.selected_target)
                     .cloned()
                     .unwrap_or_default();
-                let saved: std::collections::HashMap<String, bool> = self.state.tasks.iter()
+                let saved: std::collections::HashMap<String, bool> = self
+                    .state
+                    .tasks
+                    .iter()
                     .map(|t| (t.id.clone(), t.checked))
                     .collect();
                 self.state.checked_state.insert(leaving, saved);
@@ -844,11 +980,16 @@ impl eframe::App for XtaskRunner {
                     ui.add_space(4.0);
                     ui.label(egui::RichText::new("Console").color(TEXT_DIM).size(12.0));
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                        if ui.add(
-                            egui::Button::new(egui::RichText::new("Clear").color(TEXT_DIM).size(11.0))
+                        if ui
+                            .add(
+                                egui::Button::new(
+                                    egui::RichText::new("Clear").color(TEXT_DIM).size(11.0),
+                                )
                                 .fill(egui::Color32::TRANSPARENT)
                                 .stroke(egui::Stroke::new(1.0, TEXT_DIM)),
-                        ).clicked() {
+                            )
+                            .clicked()
+                        {
                             self.state.log.lock().unwrap().clear();
                         }
                     });
@@ -904,7 +1045,7 @@ fn find_project_root() -> Result<PathBuf, String> {
             }
             match dir.parent() {
                 Some(p) => dir = p.to_path_buf(),
-                None    => break,
+                None => break,
             }
         }
     }
@@ -918,13 +1059,12 @@ fn find_project_root() -> Result<PathBuf, String> {
             }
             match dir.parent() {
                 Some(p) => dir = p.to_path_buf(),
-                None    => break,
+                None => break,
             }
         }
     }
 
-    Err(
-        "No Cargo.toml found.\n\
+    Err("No Cargo.toml found.\n\
          \n\
          cargo-xtask-runner must be run from inside a Rust project.\n\
          \n\
@@ -933,8 +1073,8 @@ fn find_project_root() -> Result<PathBuf, String> {
          \u{2022} run: cargo xtask-runner\n\
          \n\
          The project must also have an xtask runner that supports:\n\
-         cargo xtask --list   (outputs: target|task_id|description)".to_string()
-    )
+         cargo xtask --list   (outputs: target|task_id|description)"
+        .to_string())
 }
 
 fn load_header_image(ctx: &egui::Context) -> egui::TextureHandle {
@@ -1013,5 +1153,4 @@ fn main() -> eframe::Result<()> {
         },
         Box::new(|cc| Box::new(XtaskRunner::new(cc))),
     )
-
 }
