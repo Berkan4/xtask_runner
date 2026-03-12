@@ -1,8 +1,10 @@
 # cargo-xtask-runner
 
-A graphical task runner for [cargo xtask](https://github.com/matklad/cargo-xtask) workflows.
+A GUI for [cargo xtask](https://github.com/matklad/cargo-xtask) workflows.
 
-Instead of typing `cargo xtask <task> <target>` in the terminal, open a GUI that lists all your tasks, lets you check which ones to run, and streams the output to a built-in console — all without leaving your project.
+<img src="images/img.png" alt="Logo" width="500">
+
+Instead of typing `cargo xtask <task> <target>` in the terminal, open a GUI that lists all your tasks, lets you check which ones to run, and streams the output to a built-in console - all without leaving your project or blocking the terminal
 
 ---
 
@@ -38,7 +40,7 @@ package|test|Run unit tests
 package|build|Build release binary
 ```
 
-Each line is one task. The `target` field groups tasks in the dropdown — use `workspace` for tasks that apply globally and don't need a target argument.
+Each line is one task. The `target` field groups tasks in the dropdown. Use `workspace` (or any other keyword) for tasks that apply globally and don't need a target argument.
 
 ### Example xtask `--list` implementation
 
@@ -53,37 +55,23 @@ if args.contains(&"--list") {
 }
 ```
 
-## Features
-
-- **Target selector** — switch between targets via dropdown or arrow buttons
-- **Task pipeline** — check multiple tasks and run them in sequence; stops on first failure
-- **Per-task Run button** — run a single task without touching the selection
-- **Live console** — stdout and stderr streamed in real time with syntax coloring
-- **Stop button** — cancel a running pipeline at any time
-- **No terminal flicker** — fully windowless on Windows
-
 ## How it works
 
-`cargo xtask-runner` runs `cargo xtask --list` to discover available tasks, then invokes each selected task as:
+### Run all tasks via checkboxes.
 
-```
-cargo xtask <task_id> <target>
-```
+![img.png](images/img.png)
 
-For workspace-scoped tasks the target argument is omitted.
+### Aborts when an error occurs in ooder.
 
-## Platform support
+![img_1.png](images/img_1.png)
 
-| Platform | Status |
-|----------|--------|
-| Windows  | ✅ Full support, no console window |
-| Linux    | ✅ Supported |
-| macOS    | ✅ Supported |
+### Run individual tasks (test is running)
 
-On Linux and macOS the terminal remains usable after launch. If you want to explicitly background the process:
-```bash
-cargo xtask-runner &
-```
+![img_2.png](images/img_2.png)
+
+### Stop tasks at will.
+
+![img_3.png](images/img_3.png)
 
 ## License
 

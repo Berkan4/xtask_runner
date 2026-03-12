@@ -1,6 +1,6 @@
 [package]
 name = "cargo-xtask-runner"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2024"
 description = "A graphical task runner for cargo xtask workflows. Run `cargo xtask-runner` inside any Rust project."
 license = "MIT"
