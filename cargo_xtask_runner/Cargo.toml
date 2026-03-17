@@ -8,7 +8,7 @@ repository = "https://github.com/Berkan4/xtask_runner"
 homepage = "https://github.com/Berkan4/xtask_runner"
 keywords = ["cargo", "xtask", "gui", "runner", "build"]
 categories = ["development-tools", "command-line-utilities"]
-readme = "README.md"
+readme = "../README.md"
 exclude = [".github", "*.gif"]
 
 [[bin]]

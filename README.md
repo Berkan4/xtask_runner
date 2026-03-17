@@ -2,7 +2,7 @@
 
 A GUI for [cargo xtask](https://github.com/matklad/cargo-xtask) workflows.
 
-<img src="images/img.png" alt="Logo" width="500">
+<img src="cargo_xtask_runner/images/img.png" alt="Logo" width="500">
 
 Instead of typing `cargo xtask <task> <target>` in the terminal, open a GUI that lists all your tasks, lets you check which ones to run, and streams the output to a built-in console - all without leaving your project or blocking the terminal
 
@@ -59,20 +59,20 @@ if args.contains(&"--list") {
 
 ### Run all tasks via checkboxes.
 
-![img.png](images/img.png)
+![img.png](cargo_xtask_runner/images/img.png)
 
 ### Aborts when an error occurs in ooder.
 
-![img_1.png](images/img_1.png)
+![img_1.png](cargo_xtask_runner/images/img_1.png)
 
 ### Run individual tasks (test is running)
 
-![img_2.png](images/img_2.png)
+![img_2.png](cargo_xtask_runner/images/img_2.png)
 
 ### Stop tasks at will.
 
-![img_3.png](images/img_3.png)
+![img_3.png](cargo_xtask_runner/images/img_3.png)
 
 ## License
 
-MIT — see [LICENSE](../LICENSE)
+MIT — see [LICENSE](LICENSE)
